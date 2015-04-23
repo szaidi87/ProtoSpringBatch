@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.sal.proto.jetty.server.ProtoJettyServer;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 @Slf4j
@@ -38,7 +39,12 @@ public class ReportBatchMain {
 		
 		context.load(xmlConfiguration.toArray(new String[xmlConfiguration.size()]));
 		context.refresh();
-		
+		try {
+			ProtoJettyServer.main(null);
+		} catch (Exception e) {
+			System.err.println("Error: Couldn't start up a Jetty server");
+			System.exit(1);
+		}
 		log.info("Started Proto Spring Batch app");
 	}
 }
